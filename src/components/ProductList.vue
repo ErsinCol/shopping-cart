@@ -1,12 +1,17 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
+import { useStore } from 'vuex'
 import shop from '@/api/shop.js'
 
-const products = ref([])
+const store = useStore()
+
+const products = computed(() => {
+  return store.state.products
+})
 
 onMounted(() => {
   shop.getProducts((productsArr) => {
-    products.value = productsArr
+    store.commit('setProducts', productsArr)
   })
 })
 </script>

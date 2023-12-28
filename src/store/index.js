@@ -17,8 +17,8 @@ const store = createStore({
     }
   },
   mutations: {
-    setProducts() {
-      // ...
+    setProducts(state, payload) {
+      state.products = payload
     }
   }
 })
