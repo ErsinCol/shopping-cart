@@ -10,6 +10,10 @@ const products = computed(() => {
   return store.getters.availableProducts
 })
 
+const addProductToCart = (product) => {
+  store.dispatch('addProductToCart', product)
+}
+
 onMounted(() => {
   loading.value = true
   store.dispatch('fetchProducts').then(() => {
@@ -24,7 +28,9 @@ onMounted(() => {
     <img v-if="loading" src="https://i.imgur.com/JfPpwOA.gif" alt="spinner-image" />
     <ul v-else>
       <li v-for="product in products" :key="product.id">
-        {{ product.title }} - {{ product.price }}
+        <h3>{{ product.title }}</h3>
+        <p>{{ product.price }}</p>
+        <button v-on:click="addProductToCart(product)">Add to cart</button>
       </li>
     </ul>
   </div>

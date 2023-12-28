@@ -4,7 +4,8 @@ import shop from '@/api/shop.js'
 const store = createStore({
   state() {
     return {
-      products: []
+      products: [],
+      cart: []
     }
   },
   getters: {
@@ -20,11 +21,34 @@ const store = createStore({
           resolve()
         })
       })
+    },
+    addProductToCart({ state, commit }, product) {
+      if (product.inventory > 0) {
+        const cartItem = state.cart.find((cartItem) => cartItem.id === product.id)
+        if (!cardItem) {
+          commit('pushProductToCart', product.id)
+        } else {
+          commit('incrementItemQuantity', cartItem)
+        }
+        commit('decrementProductInventory', product)
+      }
     }
   },
   mutations: {
     setProducts(state, payload) {
       state.products = payload
+    },
+    pushProductToCart(state, productId) {
+      state.cart.push({
+        id: productId,
+        quantity: 1
+      })
+    },
+    incrementItemQuantity(cardItem) {
+      cardItem.quantity += 1
+    },
+    decrementProductInventory(product) {
+      product.inventory -= 1
     }
   }
 })
