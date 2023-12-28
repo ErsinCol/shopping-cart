@@ -5,11 +5,12 @@ const store = createStore({
   state() {
     return {
       products: [],
-      cart: []
+      cart: [],
+      checkoutStatus: null
     }
   },
   getters: {
-    availableProducts(state, getters) {
+    availableProducts(state) {
       return state.products.filter((product) => product.inventory > 0)
     },
     cartProducts(state) {
@@ -31,23 +32,35 @@ const store = createStore({
   },
   actions: {
     fetchProducts({ commit }) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         shop.getProducts((productsArr) => {
           commit('setProducts', productsArr)
           resolve()
         })
       })
     },
-    addProductToCart(context, product) {
+    addProductToCart({ state, commit }, product) {
       if (product.inventory > 0) {
-        const cartItem = context.state.cart.find((cartItem) => cartItem.id === product.id)
+        const cartItem = state.cart.find((cartItem) => cartItem.id === product.id)
         if (!cartItem) {
-          context.commit('pushProductToCart', product.id)
+          commit('pushProductToCart', product.id)
         } else {
-          context.commit('incrementItemQuantity', cartItem)
+          commit('incrementItemQuantity', cartItem)
         }
-        context.commit('decrementProductInventory', product)
+        commit('decrementProductInventory', product)
       }
+    },
+    checkout({ state, commit }) {
+      shop.buyProducts(
+        state.cart,
+        () => {
+          commit('emptyCart')
+          commit('setCheckoutStatus', 'success')
+        },
+        () => {
+          commit('setCheckoutStatus', 'fail')
+        }
+      )
     }
   },
   mutations: {
@@ -65,6 +78,12 @@ const store = createStore({
     },
     decrementProductInventory(state, product) {
       product.inventory -= 1
+    },
+    emptyCart(state) {
+      state.cart = []
+    },
+    setCheckoutStatus(state, status) {
+      state.checkoutStatus = status
     }
   }
 })
