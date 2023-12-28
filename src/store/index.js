@@ -11,6 +11,22 @@ const store = createStore({
   getters: {
     availableProducts(state, getters) {
       return state.products.filter((product) => product.inventory > 0)
+    },
+    cartProducts(state) {
+      return state.cart.map((cartItem) => {
+        const product = state.products.find((product) => product.id === cartItem.id)
+        return {
+          title: product.title,
+          price: product.price,
+          quantity: cartItem.quantity
+        }
+      })
+    },
+    cartTotal(state, getters) {
+      return getters.cartProducts.reduce(
+        (total, product) => total + product.price * product.quantity,
+        0
+      )
     }
   },
   actions: {
@@ -22,15 +38,15 @@ const store = createStore({
         })
       })
     },
-    addProductToCart({ state, commit }, product) {
+    addProductToCart(context, product) {
       if (product.inventory > 0) {
-        const cartItem = state.cart.find((cartItem) => cartItem.id === product.id)
-        if (!cardItem) {
-          commit('pushProductToCart', product.id)
+        const cartItem = context.state.cart.find((cartItem) => cartItem.id === product.id)
+        if (!cartItem) {
+          context.commit('pushProductToCart', product.id)
         } else {
-          commit('incrementItemQuantity', cartItem)
+          context.commit('incrementItemQuantity', cartItem)
         }
-        commit('decrementProductInventory', product)
+        context.commit('decrementProductInventory', product)
       }
     }
   },
@@ -44,10 +60,10 @@ const store = createStore({
         quantity: 1
       })
     },
-    incrementItemQuantity(cardItem) {
+    incrementItemQuantity(state, cardItem) {
       cardItem.quantity += 1
     },
-    decrementProductInventory(product) {
+    decrementProductInventory(state, product) {
       product.inventory -= 1
     }
   }

@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue'
 import { useStore } from 'vuex'
+import { currency } from '@/currency.js'
 
 const loading = ref(false)
 
@@ -28,8 +29,7 @@ onMounted(() => {
     <img v-if="loading" src="https://i.imgur.com/JfPpwOA.gif" alt="spinner-image" />
     <ul v-else>
       <li v-for="product in products" :key="product.id">
-        <h3>{{ product.title }}</h3>
-        <p>{{ product.price }}</p>
+        {{ product.title }} - {{ currency(product.price) }} - {{ product.inventory }}
         <button v-on:click="addProductToCart(product)">Add to cart</button>
       </li>
     </ul>
