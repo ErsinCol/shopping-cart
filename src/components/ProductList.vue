@@ -1,7 +1,8 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue'
 import { useStore } from 'vuex'
-import shop from '@/api/shop.js'
+
+const loading = ref(false)
 
 const store = useStore()
 
@@ -10,8 +11,9 @@ const products = computed(() => {
 })
 
 onMounted(() => {
-  shop.getProducts((productsArr) => {
-    store.commit('setProducts', productsArr)
+  loading.value = true
+  store.dispatch('fetchProducts').then(() => {
+    loading.value = false
   })
 })
 </script>
@@ -19,7 +21,8 @@ onMounted(() => {
 <template>
   <div>
     <h2>Product List</h2>
-    <ul>
+    <img v-if="loading" src="https://i.imgur.com/JfPpwOA.gif" alt="spinner-image" />
+    <ul v-else>
       <li v-for="product in products" :key="product.id">
         {{ product.title }} - {{ product.price }}
       </li>

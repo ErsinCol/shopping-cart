@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import shop from '@/api/shop.js'
 
 const store = createStore({
   state() {
@@ -12,8 +13,13 @@ const store = createStore({
     }
   },
   actions: {
-    fetchProducts() {
-      // ...
+    fetchProducts({ commit }) {
+      return new Promise((resolve, reject) => {
+        shop.getProducts((productsArr) => {
+          commit('setProducts', productsArr)
+          resolve()
+        })
+      })
     }
   },
   mutations: {
