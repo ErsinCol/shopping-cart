@@ -7,8 +7,8 @@ const store = createStore({
     }
   },
   getters: {
-    productsCount() {
-      // ...
+    availableProducts(state, getters) {
+      return state.products.filter((product) => product.inventory > 0)
     }
   },
   actions: {

@@ -6,7 +6,7 @@ import shop from '@/api/shop.js'
 const store = useStore()
 
 const products = computed(() => {
-  return store.state.products
+  return store.getters.availableProducts
 })
 
 onMounted(() => {
