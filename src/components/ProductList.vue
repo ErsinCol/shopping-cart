@@ -12,16 +12,16 @@ const products = computed(() => {
 })
 
 const productIsInStock = computed(() => {
-  return store.getters.productIsInStock
+  return store.getters['products/productIsInStock']
 })
 
 const addProductToCart = (product) => {
-  store.dispatch('addProductToCart', product)
+  store.dispatch('cart/addProductToCart', product)
 }
 
 onMounted(() => {
   loading.value = true
-  store.dispatch('fetchProducts').then(() => {
+  store.dispatch('products/fetchProducts').then(() => {
     loading.value = false
   })
 })

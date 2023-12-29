@@ -6,18 +6,18 @@ import { currency } from '@/currency.js'
 const store = useStore()
 
 const cartProducts = computed(() => {
-  return store.getters.cartProducts
+  return store.getters['cart/cartProducts']
 })
 
 const total = computed(() => {
-  return store.getters.cartTotal
+  return store.getters['cart/cartTotal']
 })
 
 const checkoutStatus = computed(() => {
   return store.state.cart.checkoutStatus
 })
 
-const checkout = () => store.dispatch('checkout')
+const checkout = () => store.dispatch('cart/checkout')
 </script>
 
 <template>
