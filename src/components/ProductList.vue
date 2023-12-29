@@ -8,7 +8,7 @@ const loading = ref(false)
 const store = useStore()
 
 const products = computed(() => {
-  return store.state.products
+  return store.state.products.items
 })
 
 const productIsInStock = computed(() => {

@@ -14,7 +14,7 @@ const total = computed(() => {
 })
 
 const checkoutStatus = computed(() => {
-  return store.state.checkoutStatus
+  return store.state.cart.checkoutStatus
 })
 
 const checkout = () => store.dispatch('checkout')
