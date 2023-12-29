@@ -5,7 +5,7 @@ import ShoppingCart from '@/components/ShoppingCart.vue'
 
 <template>
   <header>
-    <h1>Shopping Card App</h1>
+    <h1>Shopping Cart App</h1>
   </header>
 
   <main>

@@ -8,7 +8,11 @@ const loading = ref(false)
 const store = useStore()
 
 const products = computed(() => {
-  return store.getters.availableProducts
+  return store.state.products
+})
+
+const productIsInStock = computed(() => {
+  return store.getters.productIsInStock
 })
 
 const addProductToCart = (product) => {
@@ -30,7 +34,9 @@ onMounted(() => {
     <ul v-else>
       <li v-for="product in products" :key="product.id">
         {{ product.title }} - {{ currency(product.price) }} - {{ product.inventory }}
-        <button v-on:click="addProductToCart(product)">Add to cart</button>
+        <button :disabled="!productIsInStock(product)" v-on:click="addProductToCart(product)">
+          Add to cart
+        </button>
       </li>
     </ul>
   </div>
