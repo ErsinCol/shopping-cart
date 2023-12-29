@@ -1,35 +1,34 @@
-# shopping-card
+# Vuex Shopping Cart Project
 
-This template should help get you started developing with Vue 3 in Vite.
+This project is developed as a part of the **Vuex for Everyone** course. It is a shopping cart application using Vue.js and Vuex.
+The goal of this project is to demonstrate the implementation of Vuex features such as getters, mutations, actions and how to split your Store with modules.
 
-## Recommended IDE Setup
+## Installation and Usage
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+To run the project locally, follow these steps:
 
-## Customize configuration
+1. Clone the project repository to your computer:
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+    ```bash
+    git clone https://github.com/ErsinCol/shopping-cart.git
+    ```
 
-## Project Setup
+2. Navigate to the project directory:
 
-```sh
-npm install
-```
+    ```bash
+    cd shopping-cart
+    ```
 
-### Compile and Hot-Reload for Development
+3. Install the necessary dependencies:
 
-```sh
-npm run dev
-```
+    ```bash
+    npm install
+    ```
 
-### Compile and Minify for Production
+4. Start the application:
 
-```sh
-npm run build
-```
+    ```bash
+    npm run dev
+    ```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+5. Open your browser and go to `http://localhost:5173`
